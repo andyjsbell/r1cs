@@ -93,7 +93,7 @@ def problem_2(p):
 
     x = random.randint(1,1000)
     y = random.randint(1,1000)
-
+    
     v1 = y * y % p
     out = v1 * y - 2 * v1 + y
 
@@ -105,9 +105,9 @@ def problem_2(p):
 #   the second circuit can be expressed as:
 #   out = ((y - 1)(y - 2)x) / 2 + ((y - 0)(y - 2)x^2) / -1 + ((y - 0)(y - 1)x^3) / 2
 #   2.out = (y - 1)(y - 2)x + -2((y - 0)(y - 2)x^2) + (y - 0)(y - 1)x^3
-#   2.out = y^2x - 3yx + x - 2y^x^2 + 4yx^2 + y^2x^3 - yx^3
+#   2.out = y^2x - 3yx + 2x - 2y^x^2 + 4yx^2 + y^2x^3 - yx^3
 #   let v1 = yx
-#   2.out = v1y - 3v1 + x - 2v1^2 + 4v1x + v1^2 - v1x^2
+#   2.out = v1y - 3v1 + 2x - 2v1^2 + 4v1x + v1^2 - v1x^2
 #   let v2 = v1(y - 3 - 2v1 + 4x + v1x + x^2)
 #   we can then use v3 = v1x and v4 = x.x
 #   so v2 = v1(y - 3 - 2v1 + 4x + v3 + v4) hence:
@@ -116,7 +116,7 @@ def problem_2(p):
 #   Connstraint 1 -> v1 = yx
 #   Connstraint 2 -> v3 = v1x
 #   Connstraint 3 -> v4 = xx
-#   Connstraint 4 -> 2.out - x= v1(y - 3 - 2v1 + 4x + v3 + v4)
+#   Connstraint 4 -> 2.out - 2x = v1(y - 3 - 2v1 + 4x + v3 + v4)
 #   witness -> [1, out, x, y, v1, v3, v4]
 
     # lhs -> y, v1, x, v1
@@ -133,12 +133,12 @@ def problem_2(p):
         [ 0, 0, 1, 0, 0, 0, 0],
         [ -3, 0, 4, 1, -2, 1, 1],
     ]);
-    # out -> v1, v2, v3, (2.out - x)
+    # out -> v1, v2, v3, (2.out - 2x)
     C= np.array([
         [ 0,  0,  0,  0,  1,  0,  0],
         [ 0,  0,  0,  0,  0,  1,  0],
         [ 0,  0,  0,  0,  0,  0,  1],
-        [ 0,  2,  -1,  0,  0,  0,  0],
+        [ 0,  2,  -2,  0,  0,  0,  0],
         ]);
 
     x = random.randint(1,1000)
@@ -147,8 +147,8 @@ def problem_2(p):
     v1 = y * x % p
     v3 = v1 * x % p
     v4 = x * x % p
-    # out = (v1(y - 3 - 2v1 + 4x + v3 + v4) + x) / 2
-    out = (v1 * (y - 3 - 2*v1 + 4 * x + v3 + v4) + x) * pow(2,-1,p) % p
+    # out = (v1(y - 3 - 2v1 + 4x + v3 + v4) + 2x) / 2
+    out = (v1 * (y - 3 - 2*v1 + 4 * x + v3 + v4) + 2*x) * pow(2,-1,p) % p
     
     witness = np.array([1, out, x, y, v1, v3, v4]);
 
