@@ -67,35 +67,35 @@ def problem_2(p):
 #     }
 
 #   the assert can be expressed as: 
-#   (y - 0)(y - 1)(y - 2) = 0
-#   expanded as y^3 - 2y^2 + y = 0
+#   y(y - 1)(y - 2) = 0
+#   expanded as y^3 - 3y^2 + 2y = 0
 #   v1 = y * y
-#   out = y * v1 - 2v1 + y
-#   out - 2v1 + y = y * v1
-#   Connstraint 1 -> v1 = yx
-#   Constraint 2 -> out - 2v1 + y = yv1
+#   out = y * v1 - 3v1 + 2y
+#   out + 3v1 - 2y = y * v1
+#   Connstraint 1 -> v1 = y * y
+#   Constraint 2 -> out + 3v1 - 2y = yv1
 #   witness -> [1, out, x, y, v1]
-#   lhs -> y, y
+#   lhs -> y, v1
     A = np.array([
         [ 0,  0,  0,  1,  0],
         [ 0,  0,  0,  0,  1],
     ]);
-#   rhs -> x, v1
+#   rhs -> y, y
     B = np.array([
         [ 0,  0,  0,  1,  0],
         [ 0,  0,  0,  1,  0],
     ]);
-    # v1, (out - 2v1 + y)
+    # v1, (out + 3v1 - 2y)
     C = np.array([
         [ 0,  0,  0,  0,  1],
-        [ 0,  1,  0,  -1,  2],
+        [ 0,  0,  0,  -2,  3],
     ]);
 
     x = random.randint(1,1000)
-    y = random.randint(1,1000)
-    
+    y = random.randint(1,2)
+
     v1 = y * y % p
-    out = v1 * y - 2 * v1 + y
+    out = v1 * y - 3 * v1 + 2 * y
 
     witness = np.array([1, out, x, y, v1]);
 
